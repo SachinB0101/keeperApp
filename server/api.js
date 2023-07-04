@@ -1,7 +1,14 @@
-const express = require("express");
+import express from "express";
+import mongoose from "mongoose";
+
+import Note from "./model/Note.js";
+import User from "./model/User.js";
+
+mongoose.connect("mongodb+srv://sachinbhatt0101:helloWorld1234@cluster0.lkuhxgj.mongodb.net/");
+
 const app = express();
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
     res.send("Hello World");
 });
 
