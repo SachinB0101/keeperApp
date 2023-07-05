@@ -1,10 +1,15 @@
 import express from "express";
 import mongoose from "mongoose";
 
-import Note from "./model/Note.js";
-import User from "./model/User.js";
+import noteSchema from "./models/Note.js";
+import User from "./models/User.js";
 
-mongoose.connect("mongodb+srv://sachinbhatt0101:helloWorld1234@cluster0.lkuhxgj.mongodb.net/");
+mongoose.connect("mongodb+srv://sachinbhatt0101:helloWorld1234@cluster0.lkuhxgj.mongodb.net/keeperAppDB");
+
+const date = new Date();
+
+await User.deleteOne({firstName: "Sachin"});
+
 
 const app = express();
 
