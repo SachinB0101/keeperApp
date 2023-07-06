@@ -3,6 +3,7 @@ import {Link} from "react-router-dom"
 import axios from "axios";
 
 import Button from "./Button";
+// import Footer from "./Footer";
 
 function Login() { 
   useEffect(() => {
@@ -48,7 +49,7 @@ function Login() {
 
   return (
     <div className="login-container">
-      <h1>Hello</h1>
+      <h1>Welcome</h1>
       <form onSubmit={handelSubmit}>
         <input name="email" onChange={handelChange} className="login-input" type="email" placeholder="Your Email" value={data.email} required/>
         <input name="password" onChange={handelChange} className="login-input" type="password" placeholder="Your Password" value={data.password} required/>

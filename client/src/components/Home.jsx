@@ -36,7 +36,7 @@ function Home(){
                 />
             );
         })}
-        <Footer />
+        <Footer color="#ccc"/>
     </div>
     )
 }
