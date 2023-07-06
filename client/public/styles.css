@@ -102,3 +102,70 @@ form.create-note button {
   cursor: pointer;
   outline: none;
 }
+
+/* 
+ */
+
+.login-container {
+  margin: 10% auto;
+  padding: 80px 0;
+  text-align: center;
+}
+
+.login-container h1 {
+  font-size: 40px;
+  font-weight: 200;
+}
+
+.login-input {
+  border: 1px solid rgba(252, 252, 252, 0.4);
+  background-color: rgba(252, 252, 252, 0.2);
+  width: 250px;
+  border-radius: 3px;
+  font-family: "Source Sans Pro", sans-serif;
+  padding: 10px 15px;
+  margin: 0 auto 10px auto;
+  display: block;
+  text-align: center;
+  font-size: 18px;
+  color: black;
+  font-weight: 300;
+}
+
+.login-button {
+  appearance: none;
+  outline: 0;
+  background-color: white;
+  border: 0;
+  padding: 10px 15px;
+  color: #F2BE22;
+  border-radius: 3px;
+  width: 250px;
+  font-size: 18px;
+}
+
+.error {
+  animation: shake 0.4s ease-in-out 0s 2;
+  box-shadow: 0 0 0.5em red;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-10px);
+  }
+  40% {
+    transform: translateX(10px);
+  }
+  60% {
+    transform: translateX(-10px);
+  }
+  80% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
