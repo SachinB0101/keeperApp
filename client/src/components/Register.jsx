@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import Button from "./Button";
 // import Footer from "./Footer";
 import EmailInput from "./EmailInput";
+import PasswordInput from "./PasswordInput";
+import ConfirmPassword from "./ConfirmPassword";
 
 function Register(){
     useEffect(() => {
@@ -55,10 +57,10 @@ function Register(){
                 <input onChange={handelChange} name="fName"  className="login-input" type="text" placeholder="First Name" value={userInfo.fName} autoComplete="off" required/>
                 <input onChange={handelChange} name="lName"  className="login-input" type="text" placeholder="Last Name" value={userInfo.lName} autoComplete="off" required/>
                 <EmailInput emailChange={handelChange} emailValue={userInfo.email} />
-                <input onChange={handelChange} name="password"  className="login-input" type="password" placeholder="Password" value={userInfo.password} required/>
-                <input onChange={handelChange} name="confPassword" className="login-input" type="password" placeholder="Confirm Password" value={userInfo.confPassword} required/>
+                <PasswordInput passwordChange={handelChange} passwordValue={userInfo.password}/>
+                <ConfirmPassword confPasswordChange={handelChange} confPasswordValue={userInfo.confPassword} passwordValue={userInfo.password}/>
                 <Button text="Register"/>
-                <p style={{paddingTop: "20px"}}>Already have an account?</p>
+                <p style={{paddingTop: "20px", color: "black"}}>Already have an account?</p>
                 <Link to="/Login">Login</Link>
             </form>
         </div>

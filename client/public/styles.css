@@ -169,3 +169,9 @@ form.create-note button {
     transform: translateX(0);
   }
 }
+
+
+.password-icon {
+  vertical-align: middle;
+  margin-left: -25px; /* Adjust the value as needed */
+}

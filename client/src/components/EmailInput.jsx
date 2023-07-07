@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { TextField } from '@mui/material';
 
 function EmailInput(props){
     const emailStyle = {
@@ -12,7 +11,7 @@ function EmailInput(props){
     const [isNewEmail, setIsNewEmail] = useState(true);
 
     function checkEmail(){
-        var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
         if(props.emailValue.match(validRegex) || props.emailValue.length === 0){
             setValidEmail(true);
             if(props.emailValue.match(validRegex)){
@@ -27,13 +26,11 @@ function EmailInput(props){
         } 
         else{
             setValidEmail(false);
-            setTimeout(() => {
-                setValidEmail(true);
-            }, 400);
         }
     }
 
     function handelFocus(){
+        setValidEmail(true);
         setIsNewEmail(true);
     }
 
@@ -52,7 +49,7 @@ function EmailInput(props){
                 autoComplete="off" 
                 required
             />
-            {!isNewEmail && "This email is already associated with an account."}
+            {!isNewEmail && <label style={{color: "red"}}>This email is already associated with an account.</label>}
         </div>
     )
 }

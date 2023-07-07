@@ -40,9 +40,9 @@ app.get("/api/checkEmail", async (req, res) => {
     const result = await User.find({email: req.query.email});
 
     if(result.length === 0){
-        res.sendStatus(409);
-    }else{
         res.sendStatus(200);
+    }else{
+        res.sendStatus(409);
     }
 });
 

@@ -55,7 +55,7 @@ function Login() {
         <input name="password" onChange={handelChange} className="login-input" type="password" placeholder="Your Password" value={data.password} required/>
         <Button text="Login"/>
       </form>
-      <p style={{paddingTop: "20px"}}>Don't have an account yet?</p>
+      <p style={{paddingTop: "20px", color: "black"}}>Don't have an account yet?</p>
       <Link to="/Register">Create an account</Link>
     </div>
   );
