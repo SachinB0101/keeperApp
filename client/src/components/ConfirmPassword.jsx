@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function ConfirmPassword(props){
-    const [isCorrect, setIsCorrect] = useState("true");
+    const [isCorrect, setIsCorrect] = useState(true);
 
-    function confirmPassword(){
+    function handelConfirmPassword(){
         if(props.passwordValue === props.confPasswordValue || props.confPasswordValue.length === 0){
             setIsCorrect(true);
         }else{
             setIsCorrect(false);
         }
     }
+
+    useEffect(() => {
+        props.confPasswordCheck(isCorrect);
+    }, [isCorrect]);
 
     function handelFocus(){
         setIsCorrect(true);
@@ -18,7 +22,7 @@ function ConfirmPassword(props){
     return(
         <div>
             <input 
-                onBlur={confirmPassword}
+                onBlur={handelConfirmPassword}
                 onFocus={handelFocus}
                 onChange={props.confPasswordChange} 
                 name="confPassword" 

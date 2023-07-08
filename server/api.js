@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors"
 import bodyParser from "body-parser"
+import bcrypt from "bcrypt";
 
 import noteSchema from "./models/Note.js";
 import User from "./models/User.js";
@@ -19,6 +20,15 @@ const date = new Date();
 app.get("/api", (req, res) => {
     res.send("Hello World");
 });
+
+app.get("/api/addUser", async (req, res) => {
+    try{
+        const hashedPassword = await bcrypt.hash(req.body.password, 10); 
+    }catch{
+        res.send(500).send();
+    }
+});
+
 
 app.post("/api/checkUser", async (req, res) => {
     const email = req.body.email;
@@ -46,9 +56,6 @@ app.get("/api/checkEmail", async (req, res) => {
     }
 });
 
-app.get("/api/addUser", (req, res) =>{
-
-});
 
 app.listen(5001, () => {
     console.log("server started on 5001...");

@@ -26,6 +26,12 @@ function Register(){
         }
       }, []);
 
+      const [isRegister, setIsRegister] = useState({
+        email: false,
+        password: false,
+        confPassword: false
+      });
+
       const [userInfo, setUserInfo] = useState({
         fName: "",
         lName: "",
@@ -45,9 +51,39 @@ function Register(){
         });
       }
 
+      function checkEmail(val){
+        setIsRegister(prevValue => {
+          return{
+            email: val,
+            password: prevValue.password,
+            confPassword: prevValue.confPassword
+          }
+        });
+      }
+
+      function checkPassword(val){
+        setIsRegister(prevValue => {
+          return{
+            email: prevValue.email,
+            password: val,
+            confPassword: prevValue.confPassword
+          }
+        });
+      }
+
+      function checkConfPassword(val){
+        setIsRegister(prevValue => {
+          return{
+            email: prevValue.email,
+            password: prevValue.password,
+            confPassword: val
+          }
+        });
+      }
+
       function handelSubmit(event){
         event.preventDefault();
-        console.log(userInfo);
+        console.log(isRegister);
       }
 
     return (
@@ -56,10 +92,13 @@ function Register(){
             <form onSubmit={handelSubmit}>
                 <input onChange={handelChange} name="fName"  className="login-input" type="text" placeholder="First Name" value={userInfo.fName} autoComplete="off" required/>
                 <input onChange={handelChange} name="lName"  className="login-input" type="text" placeholder="Last Name" value={userInfo.lName} autoComplete="off" required/>
-                <EmailInput emailChange={handelChange} emailValue={userInfo.email} />
-                <PasswordInput passwordChange={handelChange} passwordValue={userInfo.password}/>
-                <ConfirmPassword confPasswordChange={handelChange} confPasswordValue={userInfo.confPassword} passwordValue={userInfo.password}/>
+                <EmailInput emailChange={handelChange} emailValue={userInfo.email} emailCheck={checkEmail}/>
+                <PasswordInput passwordChange={handelChange} passwordValue={userInfo.password} passwordCheck={checkPassword}/>
+                <ConfirmPassword confPasswordChange={handelChange} confPasswordValue={userInfo.confPassword} passwordValue={userInfo.password} confPasswordCheck={checkConfPassword}/>
                 <Button text="Register"/>
+                {
+                  !(isRegister.email && isRegister.password && isRegister.confPassword) && <label style={{color: "red"}}>Registration failed.</label>
+                }
                 <p style={{paddingTop: "20px", color: "black"}}>Already have an account?</p>
                 <Link to="/Login">Login</Link>
             </form>

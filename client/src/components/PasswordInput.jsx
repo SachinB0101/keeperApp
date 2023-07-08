@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
@@ -14,6 +14,10 @@ function PasswordInput(props){
             setIsValidPassword(false);
         }
     }
+
+    useEffect(() => {
+        props.passwordCheck(isValidPassword);
+    }, [isValidPassword]);
 
     function handleTogglePassword(){
         setIsValidPassword(true);

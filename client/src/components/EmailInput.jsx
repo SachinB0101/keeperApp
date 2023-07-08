@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function EmailInput(props){
@@ -27,7 +27,12 @@ function EmailInput(props){
         else{
             setValidEmail(false);
         }
+        
     }
+
+    useEffect(() => {
+        props.emailCheck(validEmail && isNewEmail);
+    }, [validEmail, isNewEmail]);
 
     function handelFocus(){
         setValidEmail(true);
@@ -43,7 +48,7 @@ function EmailInput(props){
                 style={!validEmail ? emailStyle : {}}
                 name="email" 
                 className="login-input" 
-                type="email" 
+                type="text" 
                 placeholder="Your Email"
                 value={props.emailValue}
                 autoComplete="off" 
