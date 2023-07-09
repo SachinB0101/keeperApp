@@ -21,11 +21,26 @@ app.get("/api", (req, res) => {
     res.send("Hello World");
 });
 
-app.get("/api/addUser", async (req, res) => {
+app.post("/api/addUser", async (req, res) => {
     try{
-        const hashedPassword = await bcrypt.hash(req.body.password, 10); 
-    }catch{
-        res.send(500).send();
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const fName = req.body.fName;
+        const lName = req.body.lName;
+        const email = req.body.email;
+
+        const newUser = new User({
+            firstName: fName,
+            lastName: lName,
+            email: email,
+            password: hashedPassword,
+            notes: []
+        });
+        await newUser.save();
+
+        res.sendStatus(200);
+    }catch(error){
+        console.error(error);
+        res.sendStatus(500);
     }
 });
 

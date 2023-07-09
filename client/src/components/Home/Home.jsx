@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Header from "./Header";
+import Header from "../Header";
 import CreateArea from "./CreateArea";
 import Note from "./Note";
-import Footer from "./Footer";
+import Footer from "../Footer";
 
 function Home(){
     const [notes, setNotes] = useState([]);

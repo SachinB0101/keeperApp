@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-import Button from "./Button";
-// import Footer from "./Footer";
+import Button from "../Button";
+
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
 import ConfirmPassword from "./ConfirmPassword";
@@ -31,6 +32,8 @@ function Register(){
         password: false,
         confPassword: false
       });
+
+      const [clickRegister, setClickRegister] = useState(false);
 
       const [userInfo, setUserInfo] = useState({
         fName: "",
@@ -82,9 +85,18 @@ function Register(){
       }
 
       function handelSubmit(event){
+        setClickRegister(true);
         event.preventDefault();
-        console.log(isRegister);
       }
+
+      useEffect(() => {
+        if(clickRegister && isRegister.confPassword && isRegister.email && isRegister.password){
+          axios.post("http://localhost:5001/api/addUser", userInfo)
+          .then(res => console.log(res));
+
+          setClickRegister(false);
+        }
+      }, [clickRegister, isRegister, userInfo]);
 
     return (
         <div className="login-container">
@@ -97,7 +109,7 @@ function Register(){
                 <ConfirmPassword confPasswordChange={handelChange} confPasswordValue={userInfo.confPassword} passwordValue={userInfo.password} confPasswordCheck={checkConfPassword}/>
                 <Button text="Register"/>
                 {
-                  !(isRegister.email && isRegister.password && isRegister.confPassword) && <label style={{color: "red"}}>Registration failed.</label>
+                  (clickRegister && !(isRegister.email && isRegister.password && isRegister.confPassword) && <label style={{color: "red"}}>Registration failed.</label>)
                 }
                 <p style={{paddingTop: "20px", color: "black"}}>Already have an account?</p>
                 <Link to="/Login">Login</Link>
