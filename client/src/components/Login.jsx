@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 import axios from "axios";
 
 import Button from "./Button";
+import { useSignIn } from "react-auth-kit";
 // import Footer from "./Footer";
 
 function Login() { 
@@ -24,10 +25,19 @@ function Login() {
     }
   }, []);
 
+  const navigate = useNavigate();
+
   const [data, setData] = useState({
     email: "",
     password: ""
   });
+
+  const [status, setStatus] = useState({
+    clicked: false,
+    correctLogin: false
+  });
+
+  const signIn = useSignIn();
 
   function handelChange(event){
     const { name, value } = event.target;
@@ -43,8 +53,30 @@ function Login() {
   function handelSubmit(event){
     event.preventDefault();
 
-    axios.post("http://localhost:5001/api/checkUser", data)
-    .then(res => console.log(data));
+    axios.post("http://localhost:5001/api/login", data)
+    .then(res => {
+      signIn({
+        token: res.data.accessToken,
+        expiresIn: 3600,
+        tokenType: "Bearer"
+      });
+
+      setStatus(preValue => {
+        return{
+          clicked: true,
+          correctLogin: true
+        }
+      });
+
+      navigate("/");
+
+    })
+    .catch(error => setStatus(preValue => {
+      return{
+        clicked: true,
+        correctLogin: false
+      }
+    }))
   }
 
   return (
@@ -55,6 +87,9 @@ function Login() {
         <input name="password" onChange={handelChange} className="login-input" type="password" placeholder="Your Password" value={data.password} required/>
         <Button text="Login"/>
       </form>
+      {
+        (status.clicked && !status.correctLogin && <label style={{color: "red"}}>Either email or password is incorrect.</label>)
+      }
       <p style={{paddingTop: "20px", color: "black"}}>Don't have an account yet?</p>
       <Link to="/Register">Create an account</Link>
     </div>

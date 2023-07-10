@@ -1,17 +1,23 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors"
 import bodyParser from "body-parser"
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import cookieParser from "cookie-parser";
 
 import noteSchema from "./models/Note.js";
 import User from "./models/User.js";
 
 const app = express();
 
+app.use(express.json())
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
 
 mongoose.connect("mongodb+srv://sachinbhatt0101:helloWorld1234@cluster0.lkuhxgj.mongodb.net/keeperAppDB");
 
@@ -20,6 +26,11 @@ const date = new Date();
 app.get("/api", (req, res) => {
     res.send("Hello World");
 });
+
+app.get("/api/home", (req, res) => {
+    console.log(req.headers["authorization"]);
+    res.status(200).send("Hello from the server");
+});  
 
 app.post("/api/addUser", async (req, res) => {
     try{
@@ -45,19 +56,28 @@ app.post("/api/addUser", async (req, res) => {
 });
 
 
-app.post("/api/checkUser", async (req, res) => {
+app.post("/api/login", async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
 
     const result = await User.find({
-        email: email,
-        password: password
+        email: email
     });
 
-    if(result.length === 1){
-        res.sendStatus(200);
-    }else{
-        res.sendStatus(400);
+    if(result.length === 0){
+        return res.status(400).send("Cannot find user");
+    }
+
+    try{
+        if(await bcrypt.compare(req.body.password, result[0].password)){
+            const accessToken = jwt.sign({email: result[0].email}, process.env.ACCESS_TOKEN_SECRET);
+            return res.status(200).json({accessToken: accessToken});
+        }else{
+            res.status(405).send("Not Allowed");
+        }
+    }catch(error){
+        console.log(error);
+        res.status(500).send();
     }
 });
 

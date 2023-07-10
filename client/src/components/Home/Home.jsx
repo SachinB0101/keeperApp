@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Header";
 import CreateArea from "./CreateArea";
 import Note from "./Note";
 import Footer from "../Footer";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 function Home(){
     const [notes, setNotes] = useState([]);
+    const [authCookie, setAuthCookie] = useState(null);
     
     function addNote(newNote) {
         setNotes(prevNotes => {
@@ -20,6 +23,25 @@ function Home(){
             });
         });
     }
+
+    useEffect(() => {
+        const cookieValue = Cookies.get("_auth");
+        setAuthCookie(cookieValue);
+    }, []);
+    
+    useEffect(() => {
+        if (authCookie) {
+            const config = {
+                headers: {
+                    Authorization: authCookie
+                }
+            };
+            axios
+            .get("http://localhost:5001/api/home", config)
+            .then((res) => console.log(res))
+            .catch((error) => console.log(error));
+        }
+    }, [authCookie]);
     
     return (
     <div>
