@@ -19,7 +19,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 
-mongoose.connect("mongodb+srv://sachinbhatt0101:helloWorld1234@cluster0.lkuhxgj.mongodb.net/keeperAppDB");
+app.use("/api/home", authenticateToken);
+
+await mongoose.connect("mongodb+srv://sachinbhatt0101:helloWorld1234@cluster0.lkuhxgj.mongodb.net/keeperAppDB");
 
 const date = new Date();
 
@@ -27,10 +29,47 @@ app.get("/api", (req, res) => {
     res.send("Hello World");
 });
 
-app.get("/api/home", (req, res) => {
-    console.log(req.headers["authorization"]);
-    res.status(200).send("Hello from the server");
+app.get("/api/home", authenticateToken, async (req, res) => {
+    const user = await User.find({email: req.user.email});
+    // console.log(user[0].notes);
+    res.status(200).send(user[0].notes);
 });  
+
+app.post("/api/addNote", authenticateToken, async (req, res) => {
+    const user = await User.find({email: req.user.email});
+    const newNote = {
+        title: req.body.title,
+        content: req.body.content
+    }
+    user[0].notes.push(newNote);
+    await user[0].save();
+
+    const data = await User.find({email: req.user.email});
+    res.sendStatus(200);
+})
+
+app.post("/api/deleteNote", authenticateToken, async (req, res) => {
+    const user = await User.find({email: req.user.email});
+
+    user[0].notes.splice(req.body.id, 1);
+
+    await user[0].save();
+
+    res.sendStatus(200);
+    
+});
+
+function authenticateToken(req, res, next){
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
+    if(token === null) return res.sendStatus(401);
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if(err) return res.sendStatus(403);
+        req.user = user;
+        next();
+    });
+}
 
 app.post("/api/addUser", async (req, res) => {
     try{

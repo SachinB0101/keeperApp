@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {Link, useNavigate} from "react-router-dom"
 import axios from "axios";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 import Button from "./Button";
 import { useSignIn } from "react-auth-kit";
@@ -39,6 +41,8 @@ function Login() {
 
   const signIn = useSignIn();
 
+  const [showPassword, setShowPassword] = useState(false);
+
   function handelChange(event){
     const { name, value } = event.target;
 
@@ -58,7 +62,8 @@ function Login() {
       signIn({
         token: res.data.accessToken,
         expiresIn: 3600,
-        tokenType: "Bearer"
+        tokenType: "Bearer",
+        authState: {email: data.email}
       });
 
       setStatus(preValue => {
@@ -79,12 +84,22 @@ function Login() {
     }))
   }
 
+  function handleTogglePassword(){
+    setShowPassword(preValue => {
+        return !preValue;
+    })
+}
+
   return (
     <div className="login-container">
       <h1>Welcome</h1>
       <form onSubmit={handelSubmit}>
         <input name="email" onChange={handelChange} className="login-input" type="email" placeholder="Your Email" value={data.email} required/>
-        <input name="password" onChange={handelChange} className="login-input" type="password" placeholder="Your Password" value={data.password} required/>
+        <input name="password" onChange={handelChange} className="login-input" type={showPassword ? "text" : "password"} placeholder="Your Password" value={data.password} style={{display: "inline"}} required/>
+        {
+          showPassword ? <VisibilityOffIcon onClick={handleTogglePassword} className="password-icon"/> : 
+          <VisibilityIcon onClick={handleTogglePassword} className="password-icon"/>
+      }
         <Button text="Login"/>
       </form>
       {

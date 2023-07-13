@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import Button from "../Button";
@@ -7,6 +7,7 @@ import Button from "../Button";
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
 import ConfirmPassword from "./ConfirmPassword";
+import { useSignIn } from "react-auth-kit";
 
 function Register(){
     useEffect(() => {
@@ -26,6 +27,10 @@ function Register(){
           document.body.style.background = "";
         }
       }, []);
+
+      const signIn = useSignIn();
+
+      const navigate = useNavigate();
 
       const [isRegister, setIsRegister] = useState({
         email: false,
@@ -92,9 +97,18 @@ function Register(){
       useEffect(() => {
         if(clickRegister && isRegister.confPassword && isRegister.email && isRegister.password){
           axios.post("http://localhost:5001/api/addUser", userInfo)
-          .then(res => console.log(res));
+          .then(res => {
+            signIn({
+              token: res.data.accessToken,
+              expiresIn: 3600,
+              tokenType: "Bearer",
+              authState: {email: userInfo.email}
+            });
+          });
 
           setClickRegister(false);
+
+          navigate("/")
         }
       }, [clickRegister, isRegister, userInfo]);
 

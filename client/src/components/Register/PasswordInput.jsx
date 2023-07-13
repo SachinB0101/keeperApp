@@ -30,12 +30,10 @@ function PasswordInput(props){
         <div> 
             <input 
                 onBlur={checkPassword}
-                // onFocus={handelFocus}
                 onChange={props.passwordChange} 
                 name="password"  
                 className="login-input" 
                 type={showPassword ? "text" : "password"}
-                // type="password"
                 placeholder="Password" 
                 value={props.passwordValue}
                 style={{display: "inline"}}

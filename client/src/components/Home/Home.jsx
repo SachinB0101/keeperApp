@@ -11,12 +11,32 @@ function Home(){
     const [authCookie, setAuthCookie] = useState(null);
     
     function addNote(newNote) {
+        const config = {
+            headers: {
+                Authorization: "Bearer " + authCookie
+            }
+        };
+        axios
+        .post("http://localhost:5001/api/addNote", newNote, config)
+        .then((res) => console.log(res))
+        .catch((error) => console.log(error));
+
         setNotes(prevNotes => {
             return [...prevNotes, newNote];
         });
     }
     
     function deleteNote(id) {
+        const config = {
+            headers: {
+                Authorization: "Bearer " + authCookie
+            }
+        };
+        axios
+        .post("http://localhost:5001/api/deleteNote", {id: id}, config)
+        .then((res) => console.log(res))
+        .catch((error) => console.log(error));
+
         setNotes(prevNotes => {
             return prevNotes.filter((noteItem, index) => {
                 return index !== id;
@@ -33,12 +53,12 @@ function Home(){
         if (authCookie) {
             const config = {
                 headers: {
-                    Authorization: authCookie
+                    Authorization: "Bearer " + authCookie
                 }
             };
             axios
             .get("http://localhost:5001/api/home", config)
-            .then((res) => console.log(res))
+            .then((res) => setNotes(res.data))
             .catch((error) => console.log(error));
         }
     }, [authCookie]);
