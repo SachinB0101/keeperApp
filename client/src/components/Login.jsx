@@ -57,7 +57,7 @@ function Login() {
   function handelSubmit(event){
     event.preventDefault();
 
-    axios.post("http://localhost:5001/api/login", data)
+    axios.post("https://kepperapp-server.onrender.com/api/login", data)
     .then(res => {
       signIn({
         token: res.data.accessToken,
@@ -65,7 +65,6 @@ function Login() {
         tokenType: "Bearer",
         authState: {email: data.email}
       });
-
       setStatus(preValue => {
         return{
           clicked: true,
@@ -76,12 +75,15 @@ function Login() {
       navigate("/");
 
     })
-    .catch(error => setStatus(preValue => {
-      return{
-        clicked: true,
-        correctLogin: false
-      }
-    }))
+    .catch(error => {
+      console.log(error);
+      setStatus(preValue => {
+        return{
+          clicked: true,
+          correctLogin: false
+        }
+      })
+    })
   }
 
   function handleTogglePassword(){
