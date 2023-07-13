@@ -25,6 +25,10 @@ await mongoose.connect("mongodb+srv://sachinbhatt0101:helloWorld1234@cluster0.lk
 
 const date = new Date();
 
+app.get("/", (req, res) => {
+    res.send("hello world");
+});
+
 app.get("/api", (req, res) => {
     res.send("Hello World");
 });
