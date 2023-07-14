@@ -60,7 +60,8 @@ function Home(){
 
     useEffect(() => {
         setLoading(true);
-        setAuthCookie(Cookies.get("_auth"));
+        const cookieValue = Cookies.get("_auth");
+        setAuthCookie(cookieValue);
     }, []);
       
     useEffect(() => {
