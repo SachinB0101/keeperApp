@@ -15,7 +15,7 @@ function EmailInput(props){
         if(props.emailValue.match(validRegex) || props.emailValue.length === 0){
             setValidEmail(true);
             if(props.emailValue.match(validRegex)){
-                axios.get("http://localhost:5001/api/checkEmail?email=" + props.emailValue)
+                axios.get("https://keeperapp-server.onrender.com/api/checkEmail?email=" + props.emailValue)
                 .then(res => {
                     console.log(res);
                 })

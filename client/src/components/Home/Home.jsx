@@ -17,7 +17,7 @@ function Home(){
             }
         };
         axios
-        .post("http://localhost:5001/api/addNote", newNote, config)
+        .post("https://keeperapp-server.onrender.com/api/addNote", newNote, config)
         .then((res) => console.log(res))
         .catch((error) => console.log(error));
 
@@ -33,7 +33,7 @@ function Home(){
             }
         };
         axios
-        .post("http://localhost:5001/api/deleteNote", {id: id}, config)
+        .post("https://keeperapp-server.onrender.com/api/deleteNote", {id: id}, config)
         .then((res) => console.log(res))
         .catch((error) => console.log(error));
 
@@ -57,7 +57,7 @@ function Home(){
                 }
             };
             axios
-            .get("http://localhost:5001/api/home", config)
+            .get("https://keeperapp-server.onrender.com/api/home", config)
             .then((res) => setNotes(res.data))
             .catch((error) => console.log(error));
         }

@@ -96,7 +96,7 @@ function Register(){
 
       useEffect(() => {
         if(clickRegister && isRegister.confPassword && isRegister.email && isRegister.password){
-          axios.post("http://localhost:5001/api/addUser", userInfo)
+          axios.post("https://keeperapp-server.onrender.com/api/addUser", userInfo)
           .then(res => console.log(res));
 
           setClickRegister(false);
