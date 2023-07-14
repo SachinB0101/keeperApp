@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter as Router} from "react-router-dom";
+import {BrowserRouter as Router, HashRouter} from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import {AuthProvider} from "react-auth-kit";
 
@@ -15,9 +15,9 @@ root.render(
             cookieDomain={window.location.hostname}
             cookieSecure={false}
         >
-            <Router>
+            <HashRouter>
                 <App />
-            </Router>
+            </HashRouter>
         </AuthProvider>
     </React.StrictMode>
 );
