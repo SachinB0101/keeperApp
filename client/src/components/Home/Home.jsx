@@ -45,20 +45,15 @@ function Home(){
     }
 
     useEffect(() => {
-        const cookieValue = Cookies.get("_auth");
-        setAuthCookie(cookieValue);
-      
-        if (cookieValue) {
-          const config = {
+        setAuthCookie(Cookies.get("_auth"));
+        const config = {
             headers: {
-              Authorization: "Bearer " + cookieValue
+                Authorization: "Bearer " + authCookie
             }
-          };
-          axios
-            .get("https://keeperapp-server.onrender.com/api/home", config)
-            .then((res) => setNotes(res.data))
-            .catch((error) => console.log(error));
-        }
+        };
+        axios.get("https://keeperapp-server.onrender.com/api/home", config)
+        .then((res) => setNotes(res.data))
+        .catch((error) => console.log(error));
     }, []);
 
     // useEffect(() => {
