@@ -44,36 +44,35 @@ function Home(){
         });
     }
 
+    // useEffect(() => {
+    //     setAuthCookie(Cookies.get("_auth"));
+    //     const config = {
+    //         headers: {
+    //             Authorization: "Bearer " + authCookie
+    //         }
+    //     };
+    //     axios.get("https://keeperapp-server.onrender.com/api/home", config)
+    //     .then((res) => setNotes(res.data))
+    //     .catch((error) => console.log(error));
+    // }, []);
+
     useEffect(() => {
         setAuthCookie(Cookies.get("_auth"));
-        const config = {
-            headers: {
-                Authorization: "Bearer " + authCookie
-            }
-        };
-        axios.get("https://keeperapp-server.onrender.com/api/home", config)
-        .then((res) => setNotes(res.data))
-        .catch((error) => console.log(error));
     }, []);
-
-    // useEffect(() => {
-    //     const cookieValue = Cookies.get("_auth");
-    //     setAuthCookie(cookieValue);
-    // }, []);
-    
-    // useEffect(() => {
-    //     if (authCookie) {
-    //         const config = {
-    //             headers: {
-    //                 Authorization: "Bearer " + authCookie
-    //             }
-    //         };
-    //         axios
-    //         .get("https://keeperapp-server.onrender.com/api/home", config)
-    //         .then((res) => setNotes(res.data))
-    //         .catch((error) => console.log(error));
-    //     }
-    // }, [authCookie, []]);
+      
+    useEffect(() => {
+        if (authCookie) {
+            const config = {
+                headers: {
+                    Authorization: "Bearer " + authCookie
+                }
+            };
+            axios
+            .get("https://keeperapp-server.onrender.com/api/home", config)
+            .then((res) => setNotes(res.data))
+            .catch((error) => console.log(error));
+    }
+    }, [authCookie]);
     
     return (
     <div>
