@@ -5,8 +5,10 @@ import Note from "./Note";
 import Footer from "../Footer";
 import axios from "axios";
 import Cookies from "js-cookie";
+import ClipLoader from "react-spinners/ClimbingBoxLoader";
 
 function Home(){
+    const [loading, setLoading] = useState(false);
     const [notes, setNotes] = useState([]);
     const [authCookie, setAuthCookie] = useState(null);
     
@@ -57,6 +59,7 @@ function Home(){
     // }, []);
 
     useEffect(() => {
+        setLoading(true);
         setAuthCookie(Cookies.get("_auth"));
     }, []);
       
@@ -67,28 +70,34 @@ function Home(){
                     Authorization: "Bearer " + authCookie
                 }
             };
-            axios
-            .get("https://keeperapp-server.onrender.com/api/home", config)
-            .then((res) => setNotes(res.data))
-            .catch((error) => console.log(error));
+        axios
+        .get("https://keeperapp-server.onrender.com/api/home", config)
+        .then((res) => setNotes(res.data))
+        .catch((error) => console.log(error));
+
+        setLoading(false);
     }
     }, [authCookie]);
     
-    return (
+    return(
     <div>
         <Header />
-        <CreateArea onAdd={addNote} />
-        {notes.map((noteItem, index) => {
-            return (
-                <Note
-                    key={index}
-                    id={index}
-                    title={noteItem.title}
-                    content={noteItem.content}
-                    onDelete={deleteNote}
-                />
-            );
-        })}
+        {loading ? <ClipLoader color="#f5ba13"/> : <CreateArea onAdd={addNote} />}
+        {
+            !loading && 
+            notes.map((noteItem, index) => {
+                return (
+                    <Note
+                        key={index}
+                        id={index}
+                        title={noteItem.title}
+                        content={noteItem.content}
+                        onDelete={deleteNote}
+                    />
+                );
+            })
+        }
+        
         <Footer color="#ccc"/>
     </div>
     )
