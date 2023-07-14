@@ -61,7 +61,7 @@ function Home(){
             .then((res) => setNotes(res.data))
             .catch((error) => console.log(error));
         }
-    }, [authCookie]);
+    }, [authCookie, []]);
     
     return (
     <div>
