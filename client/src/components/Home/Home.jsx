@@ -47,21 +47,38 @@ function Home(){
     useEffect(() => {
         const cookieValue = Cookies.get("_auth");
         setAuthCookie(cookieValue);
-    }, []);
-    
-    useEffect(() => {
-        if (authCookie) {
-            const config = {
-                headers: {
-                    Authorization: "Bearer " + authCookie
-                }
-            };
-            axios
+      
+        if (cookieValue) {
+          const config = {
+            headers: {
+              Authorization: "Bearer " + cookieValue
+            }
+          };
+          axios
             .get("https://keeperapp-server.onrender.com/api/home", config)
             .then((res) => setNotes(res.data))
             .catch((error) => console.log(error));
         }
-    }, [authCookie, []]);
+    }, []);
+
+    // useEffect(() => {
+    //     const cookieValue = Cookies.get("_auth");
+    //     setAuthCookie(cookieValue);
+    // }, []);
+    
+    // useEffect(() => {
+    //     if (authCookie) {
+    //         const config = {
+    //             headers: {
+    //                 Authorization: "Bearer " + authCookie
+    //             }
+    //         };
+    //         axios
+    //         .get("https://keeperapp-server.onrender.com/api/home", config)
+    //         .then((res) => setNotes(res.data))
+    //         .catch((error) => console.log(error));
+    //     }
+    // }, [authCookie, []]);
     
     return (
     <div>
