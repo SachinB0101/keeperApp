@@ -14,20 +14,20 @@ import User from "./models/User.js";
 const app = express();
 
 app.use(express.json())
-app.use(cors);
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 
 app.use("/api/home", authenticateToken);
 
-await mongoose.connect("mongodb+srv://sachinbhatt0101:helloWorld1234@cluster0.lkuhxgj.mongodb.net/keeperAppDB");
+mongoose.connect("mongodb+srv://sachinbhatt0101:helloWorld1234@cluster0.lkuhxgj.mongodb.net/keeperAppDB");
 
 const date = new Date();
 
-app.get("/", (req, res) => {
-    res.send("hello world");
-});
+// app.get("/", (req, res) => {
+//     res.send("hello world");
+// });
 
 app.get("/api", (req, res) => {
     res.send("Hello World");

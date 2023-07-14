@@ -97,14 +97,7 @@ function Register(){
       useEffect(() => {
         if(clickRegister && isRegister.confPassword && isRegister.email && isRegister.password){
           axios.post("http://localhost:5001/api/addUser", userInfo)
-          .then(res => {
-            signIn({
-              token: res.data.accessToken,
-              expiresIn: 3600,
-              tokenType: "Bearer",
-              authState: {email: userInfo.email}
-            });
-          });
+          .then(res => console.log(res));
 
           setClickRegister(false);
 
