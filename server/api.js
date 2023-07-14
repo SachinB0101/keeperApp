@@ -14,7 +14,7 @@ import User from "./models/User.js";
 const app = express();
 
 app.use(express.json())
-app.use(cors({origin: "KeeperApp.onrender.com"}));
+app.use(cors({origin: ["https://KeeperApp.onrender.com", "http://localhost:3000"]}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
