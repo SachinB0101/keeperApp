@@ -60,10 +60,12 @@ function Home(){
             };
             axios
             .get("https://keeperapp-server.onrender.com/api/home", config)
-            .then((res) => setNotes(res.data))
+            .then((res) => {
+                setNotes(res.data);
+                setLoading(false);
+            })
             .catch((error) => console.log(error));
         }
-        setLoading(false);
     }, [authCookie]);
     
     return(
