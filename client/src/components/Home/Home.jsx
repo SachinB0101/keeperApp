@@ -46,22 +46,9 @@ function Home(){
         });
     }
 
-    // useEffect(() => {
-    //     setAuthCookie(Cookies.get("_auth"));
-    //     const config = {
-    //         headers: {
-    //             Authorization: "Bearer " + authCookie
-    //         }
-    //     };
-    //     axios.get("https://keeperapp-server.onrender.com/api/home", config)
-    //     .then((res) => setNotes(res.data))
-    //     .catch((error) => console.log(error));
-    // }, []);
-
     useEffect(() => {
         setLoading(true);
-        const cookieValue = Cookies.get("_auth");
-        setAuthCookie(cookieValue);
+        setAuthCookie(Cookies.get("_auth"));
     }, []);
       
     useEffect(() => {
@@ -71,13 +58,12 @@ function Home(){
                     Authorization: "Bearer " + authCookie
                 }
             };
-        axios
-        .get("https://keeperapp-server.onrender.com/api/home", config)
-        .then((res) => setNotes(res.data))
-        .catch((error) => console.log(error));
-
+            axios
+            .get("https://keeperapp-server.onrender.com/api/home", config)
+            .then((res) => setNotes(res.data))
+            .catch((error) => console.log(error));
+        }
         setLoading(false);
-    }
     }, [authCookie]);
     
     return(
