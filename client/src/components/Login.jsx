@@ -80,6 +80,7 @@ function Login() {
 
     })
     .catch(error => {
+      setLoading(false);
       console.log(error);
       setStatus(preValue => {
         return{
