@@ -46,10 +46,13 @@ function Home(){
         });
     }
 
+    
     useEffect(() => {
         setLoading(true);
-        console.log(Cookies.get("_auth"));
-        setAuthCookie(Cookies.get("_auth"));
+        setTimeout(() => {
+            console.log(Cookies.get("_auth"));
+            setAuthCookie(Cookies.get("_auth"));
+        }, 2000);
     }, []);
       
     useEffect(() => {
