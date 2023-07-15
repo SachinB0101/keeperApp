@@ -53,6 +53,7 @@ function Home(){
       
     useEffect(() => {
         if (authCookie) {
+            console.log(authCookie);
             const config = {
                 headers: {
                     Authorization: "Bearer " + authCookie
