@@ -76,7 +76,7 @@ function Home(){
     return(
     <div>
         <Header />
-        {loading ? <ClipLoader color="#f5ba13"/> : <CreateArea onAdd={addNote} />}
+        {loading ? <ClipLoader color="#f5ba13" size={100} className="home-loading"/> : <CreateArea onAdd={addNote} />}
         {
             !loading && 
             notes.map((noteItem, index) => {

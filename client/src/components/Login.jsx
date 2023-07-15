@@ -108,7 +108,7 @@ function Login() {
           <VisibilityIcon onClick={handleTogglePassword} className="password-icon"/>
         }
         {
-          loading ? <ClipLoader className="loading"/> : <Button text="Login"/>
+          loading ? <ClipLoader className="login-loading"/> : <Button text="Login"/>
         }
       </form>
       {
