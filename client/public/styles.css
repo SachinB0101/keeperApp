@@ -196,3 +196,27 @@ form.create-note button {
   transform: translate(-50%, 250%);
 }
 
+
+@media only screen and (max-width: 768px) {
+  form.create-note {
+    width: 100%;
+    max-width: 480px;
+    margin: 30px auto 20px auto;
+  }
+  
+  .note {
+    width: 100%;
+    max-width: 320px;
+  }
+  
+  .login-container {
+    margin: 10% auto;
+    padding: 40px 0;
+  }
+  
+  .login-input,
+  .login-button {
+    width: 80%;
+    max-width: 250px;
+  }
+}
