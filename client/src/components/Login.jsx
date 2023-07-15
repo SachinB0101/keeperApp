@@ -3,9 +3,11 @@ import {Link, useNavigate} from "react-router-dom"
 import axios from "axios";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { useSignIn } from "react-auth-kit";
+import ClipLoader from "react-spinners/HashLoader";
 
 import Button from "./Button";
-import { useSignIn } from "react-auth-kit";
+
 // import Footer from "./Footer";
 
 function Login() { 
@@ -29,6 +31,7 @@ function Login() {
 
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     email: "",
     password: ""
@@ -57,6 +60,7 @@ function Login() {
   function handelSubmit(event){
     event.preventDefault();
 
+    setLoading(true);
     axios.post("https://keeperapp-server.onrender.com/api/login", data)
     .then(res => {
       signIn({
@@ -71,7 +75,7 @@ function Login() {
           correctLogin: true
         }
       });
-
+      setLoading(false);
       navigate("/");
 
     })
@@ -101,8 +105,10 @@ function Login() {
         {
           showPassword ? <VisibilityOffIcon onClick={handleTogglePassword} className="password-icon"/> : 
           <VisibilityIcon onClick={handleTogglePassword} className="password-icon"/>
-      }
-        <Button text="Login"/>
+        }
+        {
+          loading ? <ClipLoader className="loading"/> : <Button text="Login"/>
+        }
       </form>
       {
         (status.clicked && !status.correctLogin && <label style={{color: "red"}}>Either email or password is incorrect.</label>)

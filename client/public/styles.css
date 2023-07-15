@@ -116,6 +116,7 @@ form.create-note button {
   margin: 10% auto;
   padding: 80px 0;
   text-align: center;
+  position: relative;
 }
 
 .login-container h1 {
@@ -176,8 +177,14 @@ form.create-note button {
   }
 }
 
-
 .password-icon {
   vertical-align: middle;
   margin-left: -25px; /* Adjust the value as needed */
+}
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 49%;
+  transform: translate(-50%, -50%);
 }
