@@ -120,7 +120,7 @@ function Register(){
                 <PasswordInput passwordChange={handelChange} passwordValue={userInfo.password} passwordCheck={checkPassword}/>
                 <ConfirmPassword confPasswordChange={handelChange} confPasswordValue={userInfo.confPassword} passwordValue={userInfo.password} confPasswordCheck={checkConfPassword}/>
                 {
-                  loading ? <ClipLoader className="login-loading"/> : <Button text="Login"/>
+                  loading ? <ClipLoader className="login-loading"/> : <Button text="Register"/>
                 }
                 {
                   (clickRegister && !(isRegister.email && isRegister.password && isRegister.confPassword) && <label style={{color: "red"}}>Registration failed.</label>)
