@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import ClipLoader from "react-spinners/HashLoader";
 
 import Button from "../Button";
-
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
 import ConfirmPassword from "./ConfirmPassword";
@@ -28,10 +28,9 @@ function Register(){
         }
       }, []);
 
+      const [loading, setLoading] = useState(false);
       const signIn = useSignIn();
-
       const navigate = useNavigate();
-
       const [isRegister, setIsRegister] = useState({
         email: false,
         password: false,
@@ -96,12 +95,18 @@ function Register(){
 
       useEffect(() => {
         if(clickRegister && isRegister.confPassword && isRegister.email && isRegister.password){
+          setLoading(true);
           axios.post("https://keeperapp-server.onrender.com/api/addUser", userInfo)
-          .then(res => console.log(res));
-
-          setClickRegister(false);
-
-          navigate("/")
+          .then(res => {
+            console.log(res);
+            setClickRegister(false);
+            setLoading(false);
+            navigate("/")
+          })
+          .catch(error => {
+            setLoading(false);
+            console.log(error);
+          })
         }
       }, [clickRegister, isRegister, userInfo]);
 
@@ -114,7 +119,9 @@ function Register(){
                 <EmailInput emailChange={handelChange} emailValue={userInfo.email} emailCheck={checkEmail}/>
                 <PasswordInput passwordChange={handelChange} passwordValue={userInfo.password} passwordCheck={checkPassword}/>
                 <ConfirmPassword confPasswordChange={handelChange} confPasswordValue={userInfo.confPassword} passwordValue={userInfo.password} confPasswordCheck={checkConfPassword}/>
-                <Button text="Register"/>
+                {
+                  loading ? <ClipLoader className="login-loading"/> : <Button text="Login"/>
+                }
                 {
                   (clickRegister && !(isRegister.email && isRegister.password && isRegister.confPassword) && <label style={{color: "red"}}>Registration failed.</label>)
                 }
