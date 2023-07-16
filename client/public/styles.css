@@ -198,6 +198,10 @@ form.create-note button {
 
 
 @media only screen and (max-width: 768px) {
+  .home-loading {
+    transform: translate(-50%, 250%) scale(0.5);
+  }
+
   form.create-note {
     width: 100%;
     max-width: 480px;
