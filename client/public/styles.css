@@ -225,9 +225,12 @@ form.create-note button {
   }
 }
 
+
+/**/
+
 .note.edit-mode {
-  /* Styles for the note in edit mode */
   background-color: #f7f7f7;
+  animation: fade-in 0.3s ease-in-out forwards;
 }
 
 .note.edit-mode input[type="text"],
@@ -243,4 +246,15 @@ form.create-note button {
 
 .note.edit-mode button:last-child {
   display: inline-block;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
