@@ -14,7 +14,7 @@ import User from "./models/User.js";
 const app = express();
 
 app.use(express.json())
-app.use(cors({origin: ["https://keeperapp-xi2q.onrender.com", "http://localhost:3000"]}));
+app.use(cors({origin: ["https://keeperapp-xi2q.onrender.com", "http://localhost:5001"]}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
@@ -51,6 +51,17 @@ app.post("/api/addNote", authenticateToken, async (req, res) => {
     const data = await User.find({email: req.user.email});
     res.sendStatus(200);
 })
+
+app.post("/api/editNote", authenticateToken, async (req, res) => {
+    const user = await User.find({email: req.user.email});
+
+    user[0].notes[req.body.id].title = req.body.title;
+    user[0].notes[req.body.id].content = req.body.content;
+
+    await user[0].save();
+
+    res.sendStatus(200);
+});
 
 app.post("/api/deleteNote", authenticateToken, async (req, res) => {
     const user = await User.find({email: req.user.email});

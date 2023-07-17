@@ -42,8 +42,21 @@ function Home(){
         });
     }
 
-    function editNote(id){
-        console.log(id);
+    function saveNote(id, editedTitle, editedContent){
+        axios
+        .post("https://keeperapp-server.onrender.com/api/editNote", {id: id, title: editedTitle, content: editedContent}, config)
+        .then((res) => console.log(res))
+        .catch((error) => console.log(error));
+        
+        setNotes(prevNotes => {
+            return prevNotes.map((noteItem, index) => {
+                if(index === id){
+                    noteItem.title = editedTitle;
+                    noteItem.content = editedContent;
+                }
+                return noteItem;
+            });
+        });
     }
 
     useEffect(() => {
@@ -86,7 +99,7 @@ function Home(){
                         title={noteItem.title}
                         content={noteItem.content}
                         onDelete={deleteNote}
-                        onEdit={editNote}
+                        onSave={saveNote}
                     />
                 );
             })
