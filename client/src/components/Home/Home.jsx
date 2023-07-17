@@ -11,29 +11,25 @@ function Home(){
     const [loading, setLoading] = useState(false);
     const [notes, setNotes] = useState([]);
     const [authCookie, setAuthCookie] = useState(null);
+
+    const config = {
+        headers: {
+            Authorization: "Bearer " + authCookie
+        }
+    };
     
     function addNote(newNote) {
-        const config = {
-            headers: {
-                Authorization: "Bearer " + authCookie
-            }
-        };
         axios
         .post("https://keeperapp-server.onrender.com/api/addNote", newNote, config)
         .then((res) => console.log(res))
         .catch((error) => console.log(error));
 
         setNotes(prevNotes => {
-            return [...prevNotes, newNote];
+            return [newNote, ...prevNotes];
         });
     }
     
     function deleteNote(id) {
-        const config = {
-            headers: {
-                Authorization: "Bearer " + authCookie
-            }
-        };
         axios
         .post("https://keeperapp-server.onrender.com/api/deleteNote", {id: id}, config)
         .then((res) => console.log(res))
@@ -46,7 +42,10 @@ function Home(){
         });
     }
 
-    
+    function editNote(id){
+        console.log(id);
+    }
+
     useEffect(() => {
         setLoading(true);
         setTimeout(() => {
@@ -87,11 +86,11 @@ function Home(){
                         title={noteItem.title}
                         content={noteItem.content}
                         onDelete={deleteNote}
+                        onEdit={editNote}
                     />
                 );
             })
         }
-        
         <Footer color="#ccc"/>
     </div>
     )
