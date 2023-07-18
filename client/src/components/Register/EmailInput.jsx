@@ -11,7 +11,7 @@ function EmailInput(props){
     const [isNewEmail, setIsNewEmail] = useState(true);
 
     function checkEmail(){
-        const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        const validRegex = /^[a-zA-Z]+([.!&#_-][a-zA-Z0-9]+)*[0-9]?@[a-zA-Z-]+\.[a-z]+$/;
         if(props.emailValue.match(validRegex) || props.emailValue.length === 0){
             setValidEmail(true);
             if(props.emailValue.match(validRegex)){
