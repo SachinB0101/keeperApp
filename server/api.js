@@ -113,9 +113,7 @@ app.post("/api/login", async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    const result = await User.find({
-        email: email
-    });
+    const result = await User.find({email: email});
 
     if(result.length === 0){
         return res.status(400).send("Cannot find user");

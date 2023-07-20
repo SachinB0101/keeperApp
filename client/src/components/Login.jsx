@@ -8,8 +8,6 @@ import ClipLoader from "react-spinners/HashLoader";
 
 import Button from "./Button";
 
-// import Footer from "./Footer";
-
 function Login() { 
   useEffect(() => {
     document.body.style.fontFamily = "Source Sans Pro, sans-serif"
